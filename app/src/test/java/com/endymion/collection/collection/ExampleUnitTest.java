@@ -1,4 +1,4 @@
-package com.endymion.jim.collection;
+package com.endymion.collection.collection;
 
 import org.junit.Test;
 
