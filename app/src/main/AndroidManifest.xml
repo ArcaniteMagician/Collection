@@ -3,6 +3,7 @@
     package="com.endymion.collection.collection">
 
     <application
+        android:name="com.endymion.collection.CollectionApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
