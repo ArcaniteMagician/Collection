@@ -54,6 +54,15 @@ public class InteractiveUtils {
             mediaPlayer = null;
         }
         if (mediaPlayer != null) {
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.reset();
+                        mediaPlayer.release();
+                    }
+                }
+            });
             mediaPlayer.start();
         }
     }
