@@ -1,4 +1,4 @@
-package com.endymion.collection.collection;
+package com.endymion.collection;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
