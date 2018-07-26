@@ -5,13 +5,12 @@ import android.util.Log;
 
 import com.endymion.collection.presenter.TestPresenter;
 import com.endymion.collection.presenter.interfaces.TestViewBridge;
-import com.endymion.common.base.BaseActivity;
-import com.endymion.collection.collection.R;
+import com.endymion.common.base.BasePresenterActivity;
 import com.endymion.common.util.TimeMillisUtils;
 
 import java.util.TimeZone;
 
-public class MainActivity extends BaseActivity<TestPresenter> implements TestViewBridge {
+public class MainActivity extends BasePresenterActivity<TestPresenter> implements TestViewBridge {
     private static final String TAG = "MainActivity";
 
     @Override
