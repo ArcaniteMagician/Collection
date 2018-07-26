@@ -4,12 +4,18 @@ android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
     defaultConfig {
-        applicationId "com.endymion.jim.collection"
+        applicationId "com.endymion.collection"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+
+        dexOptions {
+            javaMaxHeapSize "4g"
+        }
     }
 
     buildTypes {
@@ -19,7 +25,7 @@ android {
             matchingFallbacks = ['debug']
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release']
         }

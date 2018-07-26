@@ -89,7 +89,6 @@ public class TimeMillisUtils {
                     long serverTimeMillis = urlConnection.getDate();// 获取服务器时间
                     if (serverTimeMillis != 0) {
                         mDeviceOpenTimeMillisOnServer = serverTimeMillis - elapsedRealTimeMillis;
-                        SharedPreferencesUtils.putLong(mContext, mServerHost, mDeviceOpenTimeMillisOnServer);
                     }
                     Log.w(TAG, "mDeviceOpenTimeMillisOnServer = " + mDeviceOpenTimeMillisOnServer);
                 } catch (IOException e) {
