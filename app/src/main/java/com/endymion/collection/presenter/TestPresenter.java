@@ -2,7 +2,7 @@ package com.endymion.collection.presenter;
 
 import android.util.Log;
 
-import com.endymion.collection.presenter.interfaces.TestViewBridge;
+import com.endymion.collection.ui.view.TestViewBridge;
 import com.endymion.common.presenter.BasePresenter;
 
 /**

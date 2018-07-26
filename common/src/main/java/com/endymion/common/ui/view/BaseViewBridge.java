@@ -1,4 +1,4 @@
-package com.endymion.common.presenter.interfaces;
+package com.endymion.common.ui.view;
 
 /**
  * 为Presenter提供UI控制方法

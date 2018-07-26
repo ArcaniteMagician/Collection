@@ -1,6 +1,6 @@
 package com.endymion.common.presenter;
 
-import com.endymion.common.presenter.interfaces.BaseViewBridge;
+import com.endymion.common.ui.view.BaseViewBridge;
 
 /**
  *
