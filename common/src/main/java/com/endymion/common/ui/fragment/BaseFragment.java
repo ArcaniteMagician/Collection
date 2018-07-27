@@ -1,6 +1,8 @@
-package com.endymion.common.base;
+package com.endymion.common.ui.fragment;
 
 import android.support.v4.app.Fragment;
+
+import com.endymion.common.BaseApplication;
 
 /**
  * Fragment基类

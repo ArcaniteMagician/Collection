@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.endymion.collection.presenter.TestPresenter;
 import com.endymion.collection.ui.view.TestViewBridge;
-import com.endymion.common.base.BasePresenterActivity;
+import com.endymion.common.ui.activity.BasePresenterActivity;
 import com.endymion.common.util.TimeMillisUtils;
 
 import java.util.TimeZone;

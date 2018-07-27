@@ -1,4 +1,4 @@
-package com.endymion.common.base;
+package com.endymion.common.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.StringRes;

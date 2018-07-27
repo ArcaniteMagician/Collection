@@ -1,4 +1,4 @@
-package com.endymion.common.base;
+package com.endymion.common;
 
 import android.support.multidex.MultiDexApplication;
 

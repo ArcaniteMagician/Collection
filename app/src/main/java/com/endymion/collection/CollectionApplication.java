@@ -1,6 +1,6 @@
 package com.endymion.collection;
 
-import com.endymion.common.base.BaseApplication;
+import com.endymion.common.BaseApplication;
 
 /**
  * 应用
