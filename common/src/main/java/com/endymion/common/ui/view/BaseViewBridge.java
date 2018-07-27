@@ -1,5 +1,7 @@
 package com.endymion.common.ui.view;
 
+import android.support.annotation.StringRes;
+
 /**
  * 为Presenter提供UI控制方法
  * Created by Jim on 2018/07/19.
@@ -23,7 +25,8 @@ public interface BaseViewBridge {
     void showToast(String msg);
 
     /**
-     * 显示请求错误提示
+     * 显示提示
+     * @param msgId 提示内容id
      */
-    void showErr();
+    void showToast(@StringRes int msgId);
 }

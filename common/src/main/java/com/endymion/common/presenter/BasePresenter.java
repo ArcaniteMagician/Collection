@@ -2,20 +2,24 @@ package com.endymion.common.presenter;
 
 import com.endymion.common.ui.view.BaseViewBridge;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 /**
  *
  * Created by Jim on 2018/07/19.
  */
 
 public class BasePresenter<T extends BaseViewBridge> {
-    private T viewBridge;
+    private T mViewBridge;
+    private CompositeDisposable mCompositeDisposable;
 
     /**
      * 绑定view，在初始化中调用
      */
     public void attachView(T viewBridge) {
         if (viewBridge != null) {
-            this.viewBridge = viewBridge;
+            this.mViewBridge = viewBridge;
         }
     }
 
@@ -23,7 +27,7 @@ public class BasePresenter<T extends BaseViewBridge> {
      * 解绑view，在onDestroy中调用
      */
     public void detachView() {
-        viewBridge = null;
+        mViewBridge = null;
     }
 
     /**
@@ -31,13 +35,28 @@ public class BasePresenter<T extends BaseViewBridge> {
      * 每次调用业务请求的时候都要出先调用方法检查是否与View建立连接
      */
     public boolean isViewAttached() {
-        return viewBridge != null;
+        return mViewBridge != null;
     }
 
     /**
      * 获取UI控制器
      */
     public T getViewBridge() {
-        return viewBridge;
+        return mViewBridge;
+    }
+
+    public void addDisposable(Disposable disposable) {
+        if (mCompositeDisposable == null) {
+            synchronized (BasePresenter.class) {
+                if (mCompositeDisposable == null) {
+                    mCompositeDisposable = new CompositeDisposable();
+                }
+            }
+        }
+        mCompositeDisposable.add(disposable);
+    }
+
+    public void removeDisposable(Disposable disposable) {
+        mCompositeDisposable.remove(disposable);
     }
 }

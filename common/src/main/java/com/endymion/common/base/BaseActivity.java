@@ -1,8 +1,10 @@
 package com.endymion.common.base;
 
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.endymion.common.ui.view.BaseViewBridge;
 
@@ -22,7 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     protected abstract int getLayoutId();
 
-    protected void test() {
+    protected void init() {
 
     }
 
@@ -39,10 +41,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     public void showToast(String msg) {
         Log.w(TAG, "showToast()");
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showErr() {
-        Log.w(TAG, "showErr()");
+    public void showToast(@StringRes int msgId) {
+        Toast.makeText(this, msgId, Toast.LENGTH_SHORT).show();
     }
 }

@@ -24,9 +24,8 @@ public class MainActivity extends BasePresenterActivity<TestPresenter> implement
     }
 
     @Override
-    public void test() {
+    public void init() {
         mPresenter.getViewBridge().showToast("TEST");
-        mPresenter.getViewBridge().showErr();
         mPresenter.getViewBridge().showLoading();
         mPresenter.getViewBridge().hideLoading();
         mPresenter.test();

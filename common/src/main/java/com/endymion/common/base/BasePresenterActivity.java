@@ -19,7 +19,7 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
         initPresenter();
         //noinspection unchecked
         mPresenter.attachView(this);
-        test();
+        init();
     }
 
     protected abstract void initPresenter();
