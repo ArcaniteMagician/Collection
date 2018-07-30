@@ -2,6 +2,7 @@
 开发中常见的代码集合，会尽量降低耦合程度。
 
 项目设计及想要实现的内容，想法、过程记录：
+
 -使用MVP模式，主要参考http://www.jcodecraeer.com/a/anzhuokaifa/2017/1020/8625.html?1508484926
 -使用通用的RecylerView适配器
 -以ApplicationContext创建一个单例Dialog，将Dialog逻辑放在BaseActivity和BaseFragement中统一管理
