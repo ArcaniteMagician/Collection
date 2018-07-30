@@ -9,6 +9,7 @@ import com.endymion.collection.apply.model.entity.MainTask;
 import com.endymion.collection.apply.ui.adapter.MainTaskAdapter;
 import com.endymion.collection.test.ui.activity.TestActivity;
 import com.endymion.common.ui.activity.BaseActivity;
+import com.endymion.common.ui.adapter.RecyclerViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +34,12 @@ public class MainActivity extends BaseActivity {
     private void init() {
         Log.w(TAG, "init()");
         mList = new ArrayList<>();
-        mList.add(new MainTask("UtilTests", "", TestActivity.class));
+        mList.add(new MainTask("UtilTests", "对Common模块中的Util类进行测试", TestActivity.class));
+        mList.add(new MainTask("UtilTests", "对Common模块中的Util类进行测试", TestActivity.class));
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
+        mRecyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayoutManager.HORIZONTAL));
         mRecyclerView.setAdapter(new MainTaskAdapter(this, mList, R.layout.main_item_task));
     }
 }
