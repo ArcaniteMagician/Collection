@@ -3,6 +3,7 @@ package com.endymion.common.ui.activity;
 import android.os.Bundle;
 
 import com.endymion.common.presenter.BasePresenter;
+
 /**
  * 业务类页面Activity基类
  * Created by Jim on 2018/07/26.
