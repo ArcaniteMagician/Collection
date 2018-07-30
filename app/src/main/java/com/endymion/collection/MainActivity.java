@@ -1,21 +1,28 @@
 package com.endymion.collection;
 
-import android.os.Handler;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.endymion.collection.presenter.TestPresenter;
-import com.endymion.collection.ui.view.TestViewBridge;
-import com.endymion.common.ui.activity.BasePresenterActivity;
-import com.endymion.common.util.TimeMillisUtils;
+import com.endymion.collection.apply.model.entity.MainTask;
+import com.endymion.collection.apply.ui.adapter.MainTaskAdapter;
+import com.endymion.collection.test.ui.activity.TestActivity;
+import com.endymion.common.ui.activity.BaseActivity;
 
-import java.util.TimeZone;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends BasePresenterActivity<TestPresenter> implements TestViewBridge {
+public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
 
+    RecyclerView mRecyclerView;
+    private List<MainTask> mList;
+
     @Override
-    protected void initPresenter() {
-        mPresenter = new TestPresenter();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        init();
     }
 
     @Override
@@ -23,28 +30,12 @@ public class MainActivity extends BasePresenterActivity<TestPresenter> implement
         return R.layout.activity_main;
     }
 
-    @Override
-    public void init() {
-        mPresenter.getViewBridge().showToast("TEST");
-        mPresenter.getViewBridge().showLoading();
-        mPresenter.getViewBridge().hideLoading();
-        mPresenter.test();
-        mPresenter.getViewBridge().extraMethod();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                String date = TimeMillisUtils.dateLong2StrGMT8(MainActivity.this, System.currentTimeMillis(), TimeMillisUtils.TIME_FORMAT);
-                String date1 = TimeMillisUtils.dateLong2StrGMT8(MainActivity.this, TimeMillisUtils.getInstance().getServerTimeMillis(), TimeMillisUtils.TIME_FORMAT);
-                String date2 = TimeMillisUtils.dateLong2StrDefault(MainActivity.this, TimeMillisUtils.getInstance().getServerTimeMillis(), TimeMillisUtils.TIME_FORMAT);
-                Log.w(TAG, "System GMT+08:00 is " + date);
-                Log.w(TAG, "Server GMT+08:00 is " + date1);
-                Log.w(TAG, "Server " + TimeZone.getDefault() + " is " + date2);
-            }
-        }, 3000);
-    }
-
-    @Override
-    public void extraMethod() {
-        Log.w(TAG, "extraMethod()");
+    private void init() {
+        Log.w(TAG, "init()");
+        mList = new ArrayList<>();
+        mList.add(new MainTask("UtilTests", "", TestActivity.class));
+        mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setAdapter(new MainTaskAdapter(this, mList, R.layout.main_item_task));
     }
 }

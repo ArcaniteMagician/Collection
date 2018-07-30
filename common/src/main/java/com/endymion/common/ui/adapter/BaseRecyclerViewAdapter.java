@@ -2,6 +2,7 @@ package com.endymion.common.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,15 @@ import java.util.List;
  */
 
 public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewHolder> {
-    protected LayoutInflater layoutInflater;
-    protected List<T> dataList;
+    protected Context mContext;
+    protected LayoutInflater mInflater;
+    protected List<T> mList;
     protected int layoutId;
 
-    public BaseRecyclerViewAdapter(Context context, List<T> dataList, int layoutId) {
-        this.layoutInflater = LayoutInflater.from(context);
-        this.dataList = dataList;
+    public BaseRecyclerViewAdapter(Context context, List<T> mList, int layoutId) {
+        this.mContext = context;
+        this.mInflater = LayoutInflater.from(context);
+        this.mList = mList;
         this.layoutId = layoutId;
     }
 
@@ -31,19 +34,19 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = layoutInflater.inflate(layoutId, parent, false);
+        View itemView = mInflater.inflate(layoutId, parent, false);
         return new RecyclerViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        bindData(holder, dataList.get(position));
+        convert(holder, mList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        return mList.size();
     }
 
-    abstract void bindData(RecyclerViewHolder holder, T data);
+    public abstract void convert(RecyclerViewHolder holder, T data);
 }

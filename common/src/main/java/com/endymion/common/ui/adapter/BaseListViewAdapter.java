@@ -15,25 +15,25 @@ import java.util.List;
 
 public abstract class BaseListViewAdapter<T> extends BaseAdapter {
     protected Context mContext;
-    protected List<T> mData;
     protected LayoutInflater mInflater;
+    protected List<T> mList;
     private int layoutId;
 
-    public BaseListViewAdapter(Context context, int layoutId, List<T> data) {
+    public BaseListViewAdapter(Context context, int layoutId, List<T> list) {
         this.mContext = context;
-        mInflater = LayoutInflater.from(context);
+        this.mInflater = LayoutInflater.from(context);
         this.layoutId = layoutId;
-        this.mData = data;
+        this.mList = list;
     }
 
     @Override
     public int getCount() {
-        return mData.size();
+        return mList.size();
     }
 
     @Override
     public T getItem(int position) {
-        return mData.get(position);
+        return mList.get(position);
     }
 
     @Override

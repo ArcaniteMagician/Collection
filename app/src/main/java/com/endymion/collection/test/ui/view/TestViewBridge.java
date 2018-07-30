@@ -1,4 +1,4 @@
-package com.endymion.collection.ui.view;
+package com.endymion.collection.test.ui.view;
 
 import com.endymion.common.ui.view.BaseViewBridge;
 

@@ -1,4 +1,4 @@
-package com.endymion.collection.ui.activity;
+package com.endymion.collection.test.ui.activity;
 
 /**
  * Created by Jim on 2018/07/27.

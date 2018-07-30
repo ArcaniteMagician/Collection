@@ -24,10 +24,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     protected abstract int getLayoutId();
 
-    protected void init() {
-
-    }
-
     @Override
     public void showLoading() {
         Log.w(TAG, "showLoading()");

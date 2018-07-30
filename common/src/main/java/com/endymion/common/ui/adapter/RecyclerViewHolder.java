@@ -10,22 +10,19 @@ import android.widget.TextView;
  * Created by Jim on 2018/07/30.
  */
 
-public class RecyclerViewHolder<T> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+public class RecyclerViewHolder<T> extends RecyclerView.ViewHolder {
     // SparseArray 比 HashMap 更省内存，在某些条件下性能更好，只能存储 key 为 int 类型的数据，
     // 用来存放 View 以减少 findViewById 的次数
     private SparseArray<View> viewSparseArray;
 
-    private onItemCommonClickListener commonClickListener;
-
     public RecyclerViewHolder(View itemView) {
         super(itemView);
-        itemView.setOnClickListener(this);
-        itemView.setOnLongClickListener(this);
         viewSparseArray = new SparseArray<>();
     }
 
     /**
      * 根据 ID 来获取 View
+     *
      * @param viewId viewID
      * @param <T>    泛型
      * @return 将结果强转为 View 或 View 的子类型
@@ -58,30 +55,24 @@ public class RecyclerViewHolder<T> extends RecyclerView.ViewHolder implements Vi
         return this;
     }
 
-    protected interface onItemCommonClickListener {
-
-        void onItemClickListener(int position);
-
-        void onItemLongClickListener(int position);
-
+    public RecyclerViewHolder setOnClickListener(int viewId,
+                                                 View.OnClickListener listener) {
+        View view = getView(viewId);
+        view.setOnClickListener(listener);
+        return this;
     }
 
-    public void setCommonClickListener(onItemCommonClickListener commonClickListener) {
-        this.commonClickListener = commonClickListener;
+    public RecyclerViewHolder setOnTouchListener(int viewId,
+                                                 View.OnTouchListener listener) {
+        View view = getView(viewId);
+        view.setOnTouchListener(listener);
+        return this;
     }
 
-    @Override
-    public void onClick(View v) {
-        if (commonClickListener != null) {
-            commonClickListener.onItemLongClickListener(getAdapterPosition());
-        }
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        if (commonClickListener != null) {
-            commonClickListener.onItemClickListener(getAdapterPosition());
-        }
-        return false;
+    public RecyclerViewHolder setOnLongClickListener(int viewId,
+                                                     View.OnLongClickListener listener) {
+        View view = getView(viewId);
+        view.setOnLongClickListener(listener);
+        return this;
     }
 }
