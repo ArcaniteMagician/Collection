@@ -14,4 +14,11 @@ public class TestPresenter extends BasePresenter<TestViewBridge> {
     public void test() {
         Log.w("TestPresenter", "test()");
     }
+
+    public void allMethod() {
+        getViewBridge().showToast("TEST");
+        getViewBridge().showLoading();
+        getViewBridge().hideLoading();
+        getViewBridge().extraMethod();
+    }
 }

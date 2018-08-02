@@ -4,16 +4,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.endymion.collection.MainActivity;
 import com.endymion.collection.R;
+import com.endymion.collection.apply.presenter.MultiPresenter;
+import com.endymion.collection.apply.ui.view.MultiViewBridge;
 import com.endymion.collection.test.presenter.TestPresenter;
 import com.endymion.collection.test.ui.view.TestViewBridge;
 import com.endymion.common.ui.activity.BasePresenterActivity;
 import com.endymion.common.util.TimeMillisUtils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
-public class TestActivity extends BasePresenterActivity<TestPresenter> implements TestViewBridge {
+public class TestActivity extends BasePresenterActivity<MultiPresenter> implements MultiViewBridge {
     private static final String TAG = "TestActivity";
 
     @Override
@@ -23,11 +26,6 @@ public class TestActivity extends BasePresenterActivity<TestPresenter> implement
     }
 
     private void init() {
-        mPresenter.getViewBridge().showToast("TEST");
-        mPresenter.getViewBridge().showLoading();
-        mPresenter.getViewBridge().hideLoading();
-        mPresenter.test();
-        mPresenter.getViewBridge().extraMethod();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -39,6 +37,10 @@ public class TestActivity extends BasePresenterActivity<TestPresenter> implement
                 Log.w(TAG, "Server " + TimeZone.getDefault() + " is " + date2);
             }
         }, 3000);
+
+        mPresenter.getTestPresenter().test();
+        mPresenter.getTestPresenter().allMethod();
+        mPresenter.getSecondPresenter().allMethod();
     }
 
     @Override
@@ -48,11 +50,16 @@ public class TestActivity extends BasePresenterActivity<TestPresenter> implement
 
     @Override
     protected void initPresenter() {
-        mPresenter = new TestPresenter();
+        mPresenter = new MultiPresenter();
     }
 
     @Override
     public void extraMethod() {
         Log.w(TAG, "extraMethod()");
+    }
+
+    @Override
+    public void secondViewTest() {
+        Log.w(TAG, "secondTest()");
     }
 }
