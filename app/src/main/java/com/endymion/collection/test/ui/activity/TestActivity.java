@@ -3,17 +3,15 @@ package com.endymion.collection.test.ui.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 
+import com.endymion.collection.CollectionApplication;
 import com.endymion.collection.R;
 import com.endymion.collection.apply.presenter.MultiPresenter;
 import com.endymion.collection.apply.ui.view.MultiViewBridge;
-import com.endymion.collection.test.presenter.TestPresenter;
-import com.endymion.collection.test.ui.view.TestViewBridge;
 import com.endymion.common.ui.activity.BasePresenterActivity;
 import com.endymion.common.util.TimeMillisUtils;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TimeZone;
 
 public class TestActivity extends BasePresenterActivity<MultiPresenter> implements MultiViewBridge {
@@ -61,5 +59,9 @@ public class TestActivity extends BasePresenterActivity<MultiPresenter> implemen
     @Override
     public void secondViewTest() {
         Log.w(TAG, "secondTest()");
+    }
+
+    public void exit(View view) {
+        CollectionApplication.getInstance().exit();
     }
 }
