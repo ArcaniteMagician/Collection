@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RefreshLayout">
+        <attr name="loosen_to_load_more" format="string" />
+        <attr name="pull_to_load_more" format="string" />
+        <attr name="load_more" format="string" />
+        <attr name="load_more_success" format="string" />
+        <attr name="load_more_failure" format="string" />
+        <attr name="loading" format="string" />
+        <attr name="loosen_to_refresh" format="string" />
+        <attr name="pull_to_refresh" format="string" />
+        <attr name="refreshing" format="string" />
+        <attr name="refreshing_success" format="string" />
+        <attr name="refreshing_failure" format="string" />
+        <attr name="connected" format="reference" />
+        <attr name="loading_circle" format="reference" />
+        <attr name="text_color" format="color" />
+    </declare-styleable>
+</resources>

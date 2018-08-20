@@ -1,7 +1,12 @@
 package com.endymion.common.ui.widget.refresh;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,10 +33,28 @@ public class RotateHeaderView implements HeaderView {
     private RotateAnimatorToY mYAnimation;
     private boolean isSuccess;
 
-    public RotateHeaderView(Context context) {
+    private int tipIdPullToRefresh;
+    private int tipIdLoosenToRefresh;
+    private int tipIdRefreshing;
+    private int tipIdRefreshingSuccess;
+    private int tipIdRefreshingFailure;
+
+    public RotateHeaderView(Context context, @Nullable AttributeSet attrs) {
         mContext = context;
         mYAnimation = new RotateAnimatorToY();
         mYAnimation.setDuration(DURATION);
+
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.RefreshLayout);
+        tipIdPullToRefresh = array.getResourceId(R.styleable.RefreshLayout_pull_to_refresh, R.string.pull_to_refresh);
+        tipIdLoosenToRefresh = array.getResourceId(R.styleable.RefreshLayout_loosen_to_refresh, R.string.loosen_to_refresh);
+        tipIdRefreshing = array.getResourceId(R.styleable.RefreshLayout_refreshing, R.string.refreshing);
+        tipIdRefreshingSuccess = array.getResourceId(R.styleable.RefreshLayout_refreshing_success, R.string.refreshing_success);
+        tipIdRefreshingFailure = array.getResourceId(R.styleable.RefreshLayout_refreshing_failure, R.string.refreshing_failure);
+        int tipIdConnected = array.getResourceId(R.styleable.RefreshLayout_connected, R.mipmap.refresh_connected);
+        int tipIdLoadingCircle = array.getResourceId(R.styleable.RefreshLayout_loading_circle, R.mipmap.refresh_loading_white);
+        int tipIdTextColor = array.getResourceId(R.styleable.RefreshLayout_text_color, android.R.color.white);
+        array.recycle();
+        setStyle(tipIdConnected, tipIdLoadingCircle, tipIdTextColor);
     }
 
     @Override
@@ -42,9 +65,9 @@ public class RotateHeaderView implements HeaderView {
     @Override
     public void progress(float progress) {
         if (progress >= 1f) {
-            mTextView.setText(R.string.loosen_to_refresh);
+            mTextView.setText(tipIdLoosenToRefresh);
         } else {
-            mTextView.setText(R.string.pull_to_refresh);
+            mTextView.setText(tipIdPullToRefresh);
         }
     }
 
@@ -52,7 +75,7 @@ public class RotateHeaderView implements HeaderView {
     public void loading() {
         mLoadingView.setVisibility(View.VISIBLE);
         mFinishView.setVisibility(View.INVISIBLE);
-        mTextView.setText(R.string.refreshing);
+        mTextView.setText(tipIdRefreshing);
     }
 
     @Override
@@ -60,7 +83,7 @@ public class RotateHeaderView implements HeaderView {
         mFinishView.clearAnimation();
         mFinishView.setVisibility(View.INVISIBLE);
         mLoadingView.setVisibility(View.INVISIBLE);
-        mTextView.setText(R.string.pull_to_refresh);
+        mTextView.setText(tipIdPullToRefresh);
     }
 
     @Override
@@ -88,6 +111,13 @@ public class RotateHeaderView implements HeaderView {
         }
     }
 
+    public void setStyle(@DrawableRes int connected, @DrawableRes int loading, @ColorRes int textColor) {
+        getView();
+        mFinishView.setImageResource(connected);
+        mLoadingView.setLoadingBitmap(loading);
+        mTextView.setTextColor(mContext.getResources().getColor(textColor));
+    }
+
     @Override
     public void showPause(boolean success) {
         mLoadingView.setVisibility(View.INVISIBLE);
@@ -95,10 +125,10 @@ public class RotateHeaderView implements HeaderView {
             isSuccess = true;
             mFinishView.setVisibility(View.VISIBLE);
             mFinishView.startAnimation(mYAnimation);
-            mTextView.setText(R.string.refreshing_success);
+            mTextView.setText(tipIdRefreshingSuccess);
         } else {
             isSuccess = false;
-            mTextView.setText(R.string.refreshing_failure);
+            mTextView.setText(tipIdRefreshingFailure);
         }
     }
 

@@ -80,13 +80,13 @@ public class RefreshLayout extends ViewGroup {
 
     public RefreshLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(attrs);
     }
 
-    private void init() {
+    private void init(@Nullable AttributeSet attrs) {
         mChildCalcList = new HashSet<>();
         mScroller = new Scroller(getContext());
-        mHeaderView = new ClassicsHeaderView(getContext());
+        mHeaderView = new ClassicsHeaderView(getContext(), attrs);
         setHeadView(mHeaderView);
     }
 

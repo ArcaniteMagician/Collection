@@ -1,6 +1,9 @@
 package com.endymion.common.ui.widget.refresh;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,15 +16,27 @@ import com.endymion.common.R;
  */
 
 public class ClassicsHeaderView implements HeaderView {
-
     private Context mContext;
     private View mParent;
 
     private TextView mTextView;
     private ImageView mFinishView;
 
-    public ClassicsHeaderView(Context context) {
+    private int tipIdPullToRefresh;
+    private int tipIdLoosenToRefresh;
+    private int tipIdRefreshing;
+    private int tipIdRefreshingSuccess;
+    private int tipIdRefreshingFailure;
+
+    public ClassicsHeaderView(Context context, @Nullable AttributeSet attrs) {
         mContext = context;
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.RefreshLayout);
+        tipIdPullToRefresh = array.getResourceId(R.styleable.RefreshLayout_pull_to_refresh, R.string.pull_to_refresh);
+        tipIdLoosenToRefresh = array.getResourceId(R.styleable.RefreshLayout_loosen_to_refresh, R.string.loosen_to_refresh);
+        tipIdRefreshing = array.getResourceId(R.styleable.RefreshLayout_refreshing, R.string.refreshing);
+        tipIdRefreshingSuccess = array.getResourceId(R.styleable.RefreshLayout_refreshing_success, R.string.refreshing_success);
+        tipIdRefreshingFailure = array.getResourceId(R.styleable.RefreshLayout_refreshing_failure, R.string.refreshing_failure);
+        array.recycle();
     }
 
     @Override
@@ -32,21 +47,21 @@ public class ClassicsHeaderView implements HeaderView {
     @Override
     public void progress(float progress) {
         if (progress >= 1f) {
-            mTextView.setText(R.string.loosen_to_refresh);
+            mTextView.setText(tipIdLoosenToRefresh);
         } else {
-            mTextView.setText(R.string.pull_to_refresh);
+            mTextView.setText(tipIdPullToRefresh);
         }
     }
 
     @Override
     public void loading() {
-        mTextView.setText(R.string.refreshing);
+        mTextView.setText(tipIdRefreshing);
     }
 
     @Override
     public void reset() {
         mFinishView.setVisibility(View.INVISIBLE);
-        mTextView.setText(R.string.pull_to_refresh);
+        mTextView.setText(tipIdPullToRefresh);
     }
 
     @Override
@@ -63,9 +78,9 @@ public class ClassicsHeaderView implements HeaderView {
     public void showPause(boolean success) {
         mFinishView.setVisibility(View.VISIBLE);
         if (success) {
-            mTextView.setText(R.string.refreshing_success);
+            mTextView.setText(tipIdRefreshingSuccess);
         } else {
-            mTextView.setText(R.string.refreshing_failure);
+            mTextView.setText(tipIdRefreshingFailure);
         }
     }
 

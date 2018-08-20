@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Collection</string>
+    <string name="refreshing_test">下拉刷新测试</string>
 </resources>
