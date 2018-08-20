@@ -464,6 +464,8 @@ public class RefreshLayout extends ViewGroup {
                                 mRefreshListener.refresh();
                             }
                         }
+                    } else {
+                        finish();
                     }
                 } else if (isLoadMoreStatus()) {
                     if (mRefreshListener != null) {
@@ -478,8 +480,9 @@ public class RefreshLayout extends ViewGroup {
                         } else {
                             mScroller.startScroll(0, getScrollY(), 0, mHeadViewHeight - getScrollY(), mOutRangeScrollTime);
                             postInvalidate();
-
                         }
+                    } else {
+                        finish();
                     }
                 }
                 break;

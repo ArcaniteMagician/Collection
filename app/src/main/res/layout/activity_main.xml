@@ -6,9 +6,15 @@
     android:background="@drawable/page_background"
     tools:context="com.endymion.collection.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <com.endymion.common.ui.widget.refresh.RefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.endymion.common.ui.widget.refresh.RefreshLayout>
 
 </android.support.constraint.ConstraintLayout>
