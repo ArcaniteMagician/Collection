@@ -34,6 +34,7 @@ android {
         main {
             if (isProduct.toBoolean()) {
                 manifest.srcFile 'src/main/product/AndroidManifest.xml'
+                // 产品模式下，不再需要用于调试的Application和Activity类
                 java {
                     exclude 'debug/**'
                 }
