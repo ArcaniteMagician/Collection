@@ -2,8 +2,6 @@ package com.endymion.weather;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.endymion.common.ui.activity.BasePresenterActivity;
 import com.endymion.common.util.RxUtils;
@@ -18,9 +16,7 @@ public class MainActivity extends BasePresenterActivity<IP2WeatherPresenter> imp
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "weather", Toast.LENGTH_SHORT).show();
-        TextView textView = findViewById(R.id.txt);
-        Log.w("Weather", String.valueOf(textView == null));
+
         mPresenter.getLocalWeather()
                 .compose(RxUtils.<WeatherInfo>applySchedulers())
                 .subscribe(new RxUtils.SimpleObserver<WeatherInfo>(mPresenter) {
@@ -42,6 +38,6 @@ public class MainActivity extends BasePresenterActivity<IP2WeatherPresenter> imp
 
     @Override
     protected void initPresenter() {
-        mPresenter = new IP2WeatherPresenter(this);
+        mPresenter = new IP2WeatherPresenter();
     }
 }
