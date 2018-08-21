@@ -1,4 +1,4 @@
-package com.endymion.common.model.request;
+package com.endymion.common.model.service;
 
 /**
  * Created by Jim on 2018/07/27.
