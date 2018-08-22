@@ -26,6 +26,7 @@ public abstract class BasePresenterActivity<T extends BasePresenter> extends Bas
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mPresenter.clearDisposables();
         mPresenter.detachView();
     }
 }

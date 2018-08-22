@@ -59,4 +59,8 @@ public class BasePresenter<T extends BaseViewBridge> {
     public void removeDisposable(Disposable disposable) {
         mCompositeDisposable.remove(disposable);
     }
+
+    public void clearDisposables() {
+        mCompositeDisposable.clear();
+    }
 }

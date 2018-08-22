@@ -3,6 +3,7 @@ package com.endymion.weather.presenter;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.endymion.common.net.RetrofitHelper;
 import com.endymion.common.presenter.BasePresenter;
 import com.endymion.common.util.RxUtils;
 import com.endymion.weather.conf.Constant;
@@ -15,10 +16,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Jim on 2018/08/21.
@@ -31,12 +29,7 @@ public class IP2WeatherPresenter extends BasePresenter<IP2WeatherViewBridge> {
     private WeatherPresenter weatherPresenter;
 
     public IP2WeatherPresenter() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(new OkHttpClient())
-                .baseUrl(Constant.BASE_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = RetrofitHelper.getInstance().buildRetrofit(Constant.BASE_URL);
         ipInfoPresenter = new IPInfoPresenter(retrofit);
         weatherPresenter = new WeatherPresenter(retrofit);
     }
