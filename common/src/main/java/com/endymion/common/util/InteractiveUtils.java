@@ -58,7 +58,7 @@ public class InteractiveUtils {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     if (mediaPlayer != null) {
-                        mediaPlayer.reset();
+                        mediaPlayer.stop();
                         mediaPlayer.release();
                     }
                 }

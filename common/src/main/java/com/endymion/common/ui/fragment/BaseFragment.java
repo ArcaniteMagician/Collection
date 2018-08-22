@@ -1,8 +1,14 @@
 package com.endymion.common.ui.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.endymion.common.BaseApplication;
@@ -13,8 +19,21 @@ import com.endymion.common.ui.view.BaseViewBridge;
  * Created by Jim on 2018/07/26.
  */
 
-public class BaseFragment extends Fragment implements BaseViewBridge {
+public abstract class BaseFragment extends Fragment implements BaseViewBridge {
     private static final String TAG = "BaseFragment";
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(getLayoutId(), container, false);
+        initView(view);
+        return view;
+    }
+
+    private void initView(View view) {
+    }
+
+    protected abstract int getLayoutId();
 
     @Override
     public void showLoading() {
