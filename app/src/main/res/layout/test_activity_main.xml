@@ -3,28 +3,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context="com.endymion.collection.test.ui.activity.TestActivity">
-    <!--LinearLayout中的weight属性是对父控件在对应方向上剩余空间的分配-->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="456456456456456"
-        android:maxLines="1"
-        android:background="@android:color/holo_blue_light"
-        android:layout_weight="1"/>
+        android:orientation="horizontal">
+        <!--LinearLayout中的weight属性是对父控件在对应方向上剩余空间的分配-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_light"
+            android:maxLines="1"
+            android:text="456456456456456" />
 
-    <TextView
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@android:color/holo_red_light"
+            android:maxLines="1"
+            android:text="112" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="exit"
+            android:text="exit" />
+    </LinearLayout>
+
+    <com.endymion.collection.test.ui.activity.ExpandableTextView
+        android:id="@+id/id_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:text="112"
-        android:background="@android:color/holo_red_light"
-        android:layout_weight="2"/>
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:maxLines="3"
+        android:text="123"
+        android:textSize="12sp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="exit"
-        android:onClick="exit"/>
 </LinearLayout>

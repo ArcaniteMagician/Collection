@@ -35,7 +35,8 @@ public class MainActivity extends BaseActivity {
         Log.w(TAG, "init()");
         mList = new ArrayList<>();
         mList.add(new MainTask("UtilTests", "对Common模块中的Util类进行测试", TestActivity.class));
-        mList.add(new MainTask("Weather", "天气组件跳转", com.endymion.weather.MainActivity.class));
+//        mList.add(new MainTask("Weather", "天气组件跳转", com.endymion.weather.MainActivity.class));
+
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
