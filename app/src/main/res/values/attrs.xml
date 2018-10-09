@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AlignedTextView">
+        <attr name="atv_marginAndPaddingOfLeftRight" format="dimension"/>
+        <attr name="atv_lineSpacingExtra" format="dimension"/>
+        <attr name="atv_offset" format="dimension"/>
+        <attr name="atv_textSize" format="dimension"/>
+        <attr name="atv_textColor" format="color"/>
+    </declare-styleable>
+</resources>
