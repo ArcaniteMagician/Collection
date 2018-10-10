@@ -18,6 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".test.ui.activity.TestActivity" />
+        <activity
+            android:name=".test.ui.GalleryActivity"
+            android:theme="@style/translucent" />
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.endymion.collection.apply.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -28,7 +29,7 @@ public class MainTaskAdapter extends BaseRecyclerViewAdapter<MainTask> {
                 .setOnClickListener(R.id.cl_main, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mContext.startActivity(new Intent(mContext, data.getForwardClass()));
+                        ((Activity)mContext).startActivityForResult(new Intent(mContext, data.getForwardClass()), 1);
                     }
                 });
     }
