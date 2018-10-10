@@ -1,6 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
+    // 使用Java8新特性
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
     defaultConfig {

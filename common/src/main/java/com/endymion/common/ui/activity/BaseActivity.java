@@ -1,5 +1,6 @@
 package com.endymion.common.ui.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
@@ -56,13 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     @Override
-    public void showToast(String msg) {
-        Log.w(TAG, "showToast()");
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showToast(@StringRes int msgId) {
-        Toast.makeText(this, msgId, Toast.LENGTH_SHORT).show();
+    public Context getContext() {
+        return this;
     }
 }
