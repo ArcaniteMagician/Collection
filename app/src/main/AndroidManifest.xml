@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.endymion.collection">
 
+    <!-- 允许程序读取通讯录权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".CollectionApplication"
         android:allowBackup="true"
@@ -21,6 +24,8 @@
         <activity
             android:name=".test.ui.GalleryActivity"
             android:theme="@style/translucent" />
+        <activity android:name=".test.ui.activity.GsonActivity" />
+        <activity android:name=".test.ui.activity.contact.ContactActivity" />
     </application>
 
 </manifest>
