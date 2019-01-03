@@ -4,8 +4,11 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.endymion.collection.CollectionApplication;
@@ -27,7 +30,22 @@ public class TestActivity extends BasePresenterActivity<MultiPresenter> implemen
         init();
     }
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.test_activity_main;
+    }
+
+
     private void init() {
+        RadioGroup radioGroup = findViewById(R.id.rg);
+        for (int i = 0; i < 5; i++) {
+            RadioButton radioButton = (RadioButton) LayoutInflater.from(this).inflate(R.layout.item_radio_button, radioGroup, false);
+
+            radioButton.setText("TEST" + i);
+            radioGroup.addView(radioButton);
+        }
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -61,80 +79,80 @@ public class TestActivity extends BasePresenterActivity<MultiPresenter> implemen
         textView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                if(textView.getText().length() < 2){
+                if (textView.getText().length() < 2) {
                     return true;  //字符个数小于2，没有对齐的必要
                 }
                 int width = textView.getWidth();
                 int number;
 
                 Paint p = textView.getPaint();
-                float fisrtLength = p.measureText(firstKG,0,1);
-                float secondLength = p.measureText(secondKG,0,1);
-                int sizeCha = (int)(fisrtLength - secondLength);//基于当前的Textsize，算出两种空格的长度和差值
+                float fisrtLength = p.measureText(firstKG, 0, 1);
+                float secondLength = p.measureText(secondKG, 0, 1);
+                int sizeCha = (int) (fisrtLength - secondLength);//基于当前的Textsize，算出两种空格的长度和差值
                 number = textView.getText().length();
                 StringBuilder stringBuilderNullFirst = new StringBuilder();
                 StringBuilder stringBuilderNullSecond = new StringBuilder();
                 StringBuilder stringBuilderValid = new StringBuilder();
-                for(int k = 0;k < number;k++){
-                    if(textView.getText().charAt(k) == '\u00A0'){
+                for (int k = 0; k < number; k++) {
+                    if (textView.getText().charAt(k) == '\u00A0') {
                         stringBuilderNullFirst.append(textView.getText().charAt(k));
-                    }else if(textView.getText().charAt(k) == '\u2009'){
+                    } else if (textView.getText().charAt(k) == '\u2009') {
                         stringBuilderNullSecond.append(textView.getText().charAt(k));
-                    }else {
+                    } else {
                         stringBuilderValid.append(textView.getText().charAt(k));
                     }
                 }//计算当前文本所有字符的数量并归类，主要针对重新设置size导致的重绘
-                float checkSum = stringBuilderNullFirst.length()*fisrtLength + stringBuilderNullSecond.length()*secondLength + p.measureText(stringBuilderValid.toString(),0,stringBuilderValid.length());//算出按照目前的文字和size，总长度会是多少
-                if(checkSum > width){
+                float checkSum = stringBuilderNullFirst.length() * fisrtLength + stringBuilderNullSecond.length() * secondLength + p.measureText(stringBuilderValid.toString(), 0, stringBuilderValid.length());//算出按照目前的文字和size，总长度会是多少
+                if (checkSum > width) {
                     textView.setText(stringBuilderValid.toString());
                     /*因为size的增加，导致View容不下字，重新分配空格*/
-                }else if(checkSum == width){
+                } else if (checkSum == width) {
                     /*完美显示，直接返回绘制*/
                     return true;
-                }else {
+                } else {
                     number = stringBuilderValid.length();
-                    if((width - checkSum) > (sizeCha * (number - 1))){
-                        if(stringBuilderNullSecond.length() != 0){
+                    if ((width - checkSum) > (sizeCha * (number - 1))) {
+                        if (stringBuilderNullSecond.length() != 0) {
                             /*总余量大于每个缝隙的差值，且存在小空格,重置*/
                             textView.setText(stringBuilderValid.toString());
-                        }else {
+                        } else {
                             /*只有大空格的情况，总余量大于每个缝隙插一个小空格,重置*/
-                            if((width - checkSum) > (secondLength * (number - 1))){
+                            if ((width - checkSum) > (secondLength * (number - 1))) {
                                 textView.setText(stringBuilderValid.toString());
-                            }else {
+                            } else {
                                 return true;
                             }
                         }
-                    }else {
+                    } else {
                         return true;
                     }
                 }
                 number = textView.getText().length();
 
-                int rest = width - (int)p.measureText(textView.getText().toString(),0,textView.getText().length());
-                if(rest < 0){
+                int rest = width - (int) p.measureText(textView.getText().toString(), 0, textView.getText().length());
+                if (rest < 0) {
                     /*不加空格的情况下，字号超过组件需要换行了，本方法不生效*/
                     return true;
                 }
                 int restPer = rest / (number - 1);
-                int secondPer = restPer / (int)secondLength;
-                int secondLeft = restPer % (int)secondLength;//先用小字号空格填缝隙
+                int secondPer = restPer / (int) secondLength;
+                int secondLeft = restPer % (int) secondLength;//先用小字号空格填缝隙
                 int firstPer = 0;
-                if(sizeCha != 0) {
+                if (sizeCha != 0) {
                     firstPer = secondLeft / sizeCha;
                 }
-                if(secondPer > firstPer){
+                if (secondPer > firstPer) {
                     secondPer -= firstPer;
-                }else {
+                } else {
                     firstPer = secondPer;
                     secondPer = 0;
                 }//根据计算剩下的空间，将相应的小空格替换为大空格进一步缩小误差
                 StringBuilder stringBuilder = new StringBuilder();
-                for(int j = 0;j < number;j++){
+                for (int j = 0; j < number; j++) {
                     stringBuilder.append(textView.getText().charAt(j));
-                    if(j == number - 1){
+                    if (j == number - 1) {
                         break;
-                    }else {
+                    } else {
                         for (int i = 0; i < firstPer; i++) {
                             stringBuilder.append("\u00A0");
                         }
@@ -152,13 +170,8 @@ public class TestActivity extends BasePresenterActivity<MultiPresenter> implemen
         alignedTextView.setText("<string name=\"text\">时间改变着一切，一切改变着我们。原先看不惯的，如今习惯了；曾经很想要的，现在不需要了；开始很执着的，后来很洒脱了。失去产生了痛苦，也铸就了坚强；经历付出了代价，也锤炼了成长。没流泪，不代表没眼泪；无所谓，不代表无所累。当你知道什么是欲哭无泪，欲诉无语，欲笑无声的时候，你成熟了。累了没人疼，你要学会休息；哭了没人哄，你要知道自立；痛了没人懂，你要扛起压力抱怨的话不要说。有些委屈，是说不出来的。即使有人问，也不知从何说起；就算有人疼，也代替不了自己。嘴里有话却说不出，沉默代表了一切；心中有疼却表不明，泪水倾诉着所有。一些经历，只有自己感受；一些心情，只有自己懂得。说不出的委屈，才最委屈；心里的疼痛，才最疼痛！总是为别人着想，却要独自去疗伤；一直在嘴上逞强，心却没那么坚强。</string>");
     }
 
-    static  final  String firstKG = "\u00A0";
-    static  final  String secondKG = "\u2009";//两种不同长度的空格
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.test_activity_main;
-    }
+    static final String firstKG = "\u00A0";
+    static final String secondKG = "\u2009";//两种不同长度的空格
 
     @Override
     protected void initPresenter() {

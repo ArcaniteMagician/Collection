@@ -38,12 +38,6 @@
                 app:title="" />
         </android.support.design.widget.CollapsingToolbarLayout>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/home_tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@android:color/holo_orange_light" />
-
     </android.support.design.widget.AppBarLayout>
 
     <com.endymion.common.ui.widget.refresh.RefreshLayout

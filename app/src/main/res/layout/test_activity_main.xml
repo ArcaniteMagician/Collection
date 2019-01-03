@@ -11,6 +11,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <EditText
+            android:id="@+id/edt_amount"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:hint="输入数字"
+            android:inputType="numberDecimal"
+            android:maxLength="11"
+            android:paddingStart="40dp"
+            android:paddingEnd="0dp"
+            android:text="@={itemViewModel.amount}"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.endymion.collection.test.ui.CommentView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:clickable="true"
+            android:focusable="true" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,13 +57,21 @@
                 android:text="exit" />
         </LinearLayout>
 
+        <RadioGroup
+            android:id="@+id/rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </RadioGroup>
+
         <com.endymion.collection.test.ui.activity.ExpandableTextView
             android:id="@+id/id_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="50dp"
+            android:layout_marginEnd="15dp"
             android:maxLines="3"
             android:text="123"
             android:textSize="12sp" />
@@ -65,16 +91,16 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:gravity="top|start"
-            android:paddingEnd="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="hello，我今天就是想来测试一下你这个东西到底怎么样，哈哈哈哈。jasdjlasjd啊啊啊啊啊哈哈哈哈哈哈哈哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或jlasjdlkajsdlk呼呼呼呼呼呼呼呼呼呼呼呼呼呼12312123呼呼呼呼呼叽叽叽叽叽叽" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
             android:orientation="vertical">
 
             <TextView
