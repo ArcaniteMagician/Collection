@@ -476,18 +476,19 @@ public class ImageUtils {
         if (bitmap != null) {
             MediaStore.Images.Media.insertImage(context.getContentResolver(),
                     bitmap, getFileName(filePath), null);
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri uri = Uri.fromFile(file);
+            intent.setData(uri);
+            context.sendBroadcast(intent);
         } else {
             try {
                 MediaStore.Images.Media.insertImage(context.getContentResolver(),
                         filePath, getFileName(filePath), null);
+                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
-        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        Uri uri = Uri.fromFile(file);
-        intent.setData(uri);
-        context.sendBroadcast(intent);
     }
 
     public interface Callback {
