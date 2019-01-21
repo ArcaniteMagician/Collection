@@ -24,7 +24,6 @@
         <activity
             android:name=".test.ui.GalleryActivity"
             android:theme="@style/translucent" />
-        <activity android:name=".test.ui.activity.GsonActivity" />
         <activity android:name=".test.ui.activity.contact.ContactActivity" />
     </application>
 
