@@ -29,7 +29,6 @@ import com.nanchen.compresshelper.CompressHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -39,7 +38,6 @@ import java.util.concurrent.ExecutionException;
 import me.iwf.photopicker.PhotoPicker;
 
 /**
- * 图片处理工具类
  * Created by Jim Lee on 2018/9/4.
  */
 public class ImageUtils {
@@ -265,8 +263,11 @@ public class ImageUtils {
                 .start(activity, requestCode);
     }
 
+    // 地址末尾不加“/”是为了避免在操作目录时，还需要去除“/”的麻烦
     // 压缩图片
-    public static final String TEMP_FILE_DIRECTORY = Environment.getExternalStorageDirectory() + "/zsh/temp";
+    public static final String TEMP_FILE_DIRECTORY = Environment.getExternalStorageDirectory().getPath() + "/zsh/temp";
+    // 图片保存地址使用默认图库地址，自定义地址可能存在，部分机型通知图库更新不起作用（如魅族），或者自定义目录在相册中隐藏地很深（如vivo）的问题
+    public static final String IMAGE_DIRECTORY = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath();
 
     public static String compressImage(Context context, String path, int maxKbSize) {
         return compressImage(context, path, maxKbSize, 720, 960, 90);
@@ -348,6 +349,7 @@ public class ImageUtils {
     private static boolean copyFile(File source, File target) {
         FileInputStream fileInputStream = null;
         FileOutputStream fileOutputStream = null;
+        boolean isSuccess = true;
         try {
             fileInputStream = new FileInputStream(source);
             fileOutputStream = new FileOutputStream(target);
@@ -357,7 +359,7 @@ public class ImageUtils {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            isSuccess = false;
         } finally {
             if (fileInputStream != null) {
                 try {
@@ -374,13 +376,16 @@ public class ImageUtils {
                 }
             }
         }
-        return true;
+        return isSuccess;
     }
 
     // 文件是否不存在，文件已存在则直接返回false，不存在时进行创建
     private static boolean fileNotExists(File file) {
         if (!file.exists()) {
             try {
+                if (fileDirNotExists(file)) {
+                    return true;
+                }
                 if (!file.createNewFile()) {
                     return true;
                 }
@@ -390,6 +395,13 @@ public class ImageUtils {
             }
         }
         return false;
+    }
+
+    // 目录是否不存在
+    private static boolean fileDirNotExists(File file) {
+        String fileName = getFileName(file.getPath());
+        File fileDir = new File(file.getPath().replace("/" + fileName + ".jpg", ""));
+        return !fileDir.exists() && !fileDir.mkdirs();
     }
 
     // 从Glide获取图片缓存路径
@@ -406,23 +418,32 @@ public class ImageUtils {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+        Log.w("scan TEST", "path = " + path);
         return path;
     }
 
-    public static void saveImage(WeakReference<Context> reference, String imageUrl, String filePath, Callback callback) {
+    public static void saveImage(WeakReference<Context> reference, String imageUrl, String filePath, @Nullable Callback callback) {
         new Thread(() -> {
             String cachePath = getImagePath(reference.get(), imageUrl);
-            File file = new File(filePath);
-            if (fileNotExists(file)) {
-                callback.onFailure();
-            }
-            if (copyFile(new File(cachePath), file)) {
-                notifyGallery(reference.get(), null, filePath, file);
+            if (saveImage(reference, cachePath, filePath) && callback != null) {
                 callback.onSuccess();
-            } else {
+            } else if (callback != null) {
                 callback.onFailure();
             }
         }).start();
+    }
+
+    private static boolean saveImage(WeakReference<Context> reference, String cachePath, String filePath) {
+        File file = new File(filePath);
+        if (fileNotExists(file)) {
+            return false;
+        }
+        if (copyFile(new File(cachePath), file)) {
+            notifyGallery(reference.get(), file);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // 将控件视图保存为图像
@@ -463,7 +484,7 @@ public class ImageUtils {
         }
 
         if (isSuccess) {
-            notifyGallery(view.getContext(), bitmap, filePath, file);
+            notifyGallery(view.getContext(), file);
             bitmap.recycle();
             return true;
         } else {
@@ -472,23 +493,37 @@ public class ImageUtils {
     }
 
     // 通知相册更新
-    private static void notifyGallery(Context context, @Nullable Bitmap bitmap, String filePath, File file) {
-        if (bitmap != null) {
-            MediaStore.Images.Media.insertImage(context.getContentResolver(),
-                    bitmap, getFileName(filePath), null);
-            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            Uri uri = Uri.fromFile(file);
-            intent.setData(uri);
-            context.sendBroadcast(intent);
-        } else {
-            try {
-                MediaStore.Images.Media.insertImage(context.getContentResolver(),
-                        filePath, getFileName(filePath), null);
-                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+    public static void notifyGallery(Context context, String filePath) {
+        File file = new File(filePath);
+        if (!fileNotExists(file)) {
+            notifyGallery(context, file);
         }
+    }
+
+    private static void notifyGallery(Context context, File file) {
+        // 把文件插入到系统图库，与通知无关，做记录用。
+//            MediaStore.Images.Media.insertImage(context.getContentResolver(),
+//                    bitmap, getFileName(filePath), null);
+//            MediaStore.Images.Media.insertImage(context.getContentResolver(),
+//                    filePath, getFileName(filePath), null);
+
+        // 发送广播
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri uri = Uri.fromFile(file);
+        intent.setData(uri);
+        context.sendBroadcast(intent);
+
+//        String externalStoragePath = Environment.getExternalStorageDirectory().getPath();
+//        Log.w("scan TEST", "intent = " + intent
+//                + ";\npath = " + uri.getPath() + ";\nexternalStoragePath = " + externalStoragePath);
+
+        // MediaScannerConnection，可以扫描多个路径，配置监听器
+//        MediaScannerConnection.scanFile(context, new String[]{file.getPath()}, null, new MediaScannerConnection.OnScanCompletedListener() {
+//            @Override
+//            public void onScanCompleted(String path, Uri uri) {
+//                Log.w("scan", "onScanCompleted + " + path);
+//            }
+//        });
     }
 
     public interface Callback {
