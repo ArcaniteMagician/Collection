@@ -424,22 +424,27 @@ public class ImageUtils {
 
     public static void saveImage(WeakReference<Context> reference, String imageUrl, String filePath, @Nullable Callback callback) {
         new Thread(() -> {
-            String cachePath = getImagePath(reference.get(), imageUrl);
-            if (saveImage(reference, cachePath, filePath) && callback != null) {
-                callback.onSuccess();
-            } else if (callback != null) {
-                callback.onFailure();
+            String cachePath = null;
+            if (reference.get() != null) {
+                cachePath = getImagePath(reference.get(), imageUrl);
+            }
+            if (cachePath != null && cachePath.length() > 0 && reference.get() != null) {
+                if (saveImage(reference.get(), cachePath, filePath) && callback != null) {
+                    callback.onSuccess();
+                } else if (callback != null) {
+                    callback.onFailure();
+                }
             }
         }).start();
     }
 
-    private static boolean saveImage(WeakReference<Context> reference, String cachePath, String filePath) {
+    private static boolean saveImage(Context context, String cachePath, String filePath) {
         File file = new File(filePath);
         if (fileNotExists(file)) {
             return false;
         }
         if (copyFile(new File(cachePath), file)) {
-            notifyGallery(reference.get(), file);
+            notifyGallery(context, file);
             return true;
         } else {
             return false;
