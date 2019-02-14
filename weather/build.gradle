@@ -1,4 +1,4 @@
-if (isProduct.toBoolean()) {
+if (weatherAsComponent.toBoolean()) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
@@ -11,14 +11,17 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    compileSdkVersion 27
+    // 对资源文件中的xml类型文件进行前缀检测，未包含该前缀，会有错误提示
+    resourcePrefix('weather_')
+
+    compileSdkVersion COMPILE_SDK_VERSION.toInteger()
 
     defaultConfig {
-        if (!isProduct.toBoolean()) {
-            applicationId "com.endymion.collection"
+        if (!weatherAsComponent.toBoolean()) {
+            applicationId "com.endymion.weather"
         }
-        minSdkVersion 19
-        targetSdkVersion 27
+        minSdkVersion MIN_SDK_VERSION.toInteger()
+        targetSdkVersion TARGET_SDK_VERSION.toInteger()
         versionCode 1
         versionName "1.0"
 
@@ -38,9 +41,9 @@ android {
 
     sourceSets {
         main {
-            if (isProduct.toBoolean()) {
-                manifest.srcFile 'src/main/product/AndroidManifest.xml'
-                // 产品模式下，不再需要用于调试的Application和Activity类
+            if (weatherAsComponent.toBoolean()) {
+                manifest.srcFile 'src/main/release/AndroidManifest.xml'
+                // 组件模式下，用不到的类
                 java {
                     exclude 'debug/**'
                 }
@@ -54,11 +57,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':common')
-    implementation 'com.android.support:support-v4:27.1.1'
     testImplementation 'junit:junit:4.12'
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation "com.android.support:support-v4:$SUPPORT_V4_VERSION"
+    implementation "com.android.support:appcompat-v7:$SUPPORT_APPCOMPAT_V7_VERSION"
+    implementation "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_VERSION"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

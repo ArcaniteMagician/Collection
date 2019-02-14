@@ -6,12 +6,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion COMPILE_SDK_VERSION.toInteger()
+    buildToolsVersion BUILD_TOOLS_VERSION
+
     defaultConfig {
         applicationId "com.endymion.collection"
-        minSdkVersion 19
-        targetSdkVersion 25
+        minSdkVersion MIN_SDK_VERSION.toInteger()
+        targetSdkVersion TARGET_SDK_VERSION.toInteger()
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -40,15 +41,16 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':common')
-    if (isProduct.toBoolean()) {
-        compile project(':weather')
+    if (weatherAsComponent.toBoolean()) {
+        // 只在运行时才编译该部分代码，避免直接在app模块对组件的类进行引用
+        runtimeOnly project(':weather')
     }
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support.constraint:constraint-layout:1.1.2'
-    compile 'com.android.support:design:27.1.1'
-    compile 'com.android.support:support-v4:27.1.1'
+    compile "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_VERSION"
+    compile "com.android.support:design:$SUPPORT_DESIGN_VERSION"
+    compile "com.android.support:support-v4:$SUPPORT_V4_VERSION"
     compile 'com.github.bumptech.glide:glide:4.1.1'
 }

@@ -1,19 +1,9 @@
 package com.endymion.weather;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.endymion.common.ui.activity.BaseActivity;
-import com.endymion.common.ui.activity.BasePresenterActivity;
-import com.endymion.common.util.RxUtils;
-import com.endymion.weather.conf.Constant;
-import com.endymion.weather.model.entity.WeatherInfo;
-import com.endymion.weather.presenter.IP2WeatherPresenter;
 import com.endymion.weather.ui.fragment.HomeFragment;
-import com.endymion.weather.ui.view.IP2WeatherViewBridge;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = "WeatherMainActivity";
