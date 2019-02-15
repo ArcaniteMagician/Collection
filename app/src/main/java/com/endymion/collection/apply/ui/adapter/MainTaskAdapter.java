@@ -3,10 +3,10 @@ package com.endymion.collection.apply.ui.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 
 import com.endymion.collection.R;
 import com.endymion.collection.apply.model.entity.MainTask;
+import com.endymion.common.component.ComponentProxyFactory;
 import com.endymion.common.ui.adapter.BaseRecyclerViewAdapter;
 import com.endymion.common.ui.adapter.RecyclerViewHolder;
 
@@ -26,14 +26,11 @@ public class MainTaskAdapter extends BaseRecyclerViewAdapter<MainTask> implement
     public void convert(RecyclerViewHolder holder, final MainTask data) {
         holder.setText(R.id.txt_title, data.getTitle())
                 .setText(R.id.txt_description, data.getDescription())
-                .setOnClickListener(R.id.cl_main, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (data.getForwardClass() != null) {
-                            mActivity.startActivityForResult(new Intent(mActivity, data.getForwardClass()), 1);
-                        } else {
-                            data.getCallback().onClick();
-                        }
+                .setOnClickListener(R.id.cl_main, v -> {
+                    if (data.getForwardClass() != null) {
+                        mActivity.startActivityForResult(new Intent(mActivity, data.getForwardClass()), 1);
+                    } else {
+                        ComponentProxyFactory.getInstance().getComponentProxy(data.getComponentIndex()).start(mActivity);
                     }
                 });
     }

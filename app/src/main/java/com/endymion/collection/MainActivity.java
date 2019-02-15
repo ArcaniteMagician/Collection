@@ -42,8 +42,7 @@ public class MainActivity extends BaseActivity {
         mList.add(new MainTask("UtilTests", "对Common模块中的Util类进行测试").setForwardClass(TestActivity.class));
         mList.add(new MainTask("Gallery", "查看照片").setForwardClass(GalleryActivity.class));
         mList.add(new MainTask("Contact", "读取通讯录").setForwardClass(ContactActivity.class));
-        mList.add(new MainTask("Weather", "天气组件跳转").setCallback(
-                () -> ComponentProxyFactory.getInstance().getComponentProxy(ComponentProxyFactory.WEATHER).start(this)));
+        mList.add(new MainTask("Weather", "天气组件跳转").setComponentIndex(ComponentProxyFactory.WEATHER));
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

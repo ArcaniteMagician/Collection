@@ -8,7 +8,7 @@ public class MainTask {
     private String title;
     private String description;
     private Class<?> forwardClass;
-    private Callback callback;
+    private int componentIndex;
 
     public MainTask(String title, String description) {
         this.title = title;
@@ -40,16 +40,12 @@ public class MainTask {
         return this;
     }
 
-    public Callback getCallback() {
-        return callback;
+    public int getComponentIndex() {
+        return componentIndex;
     }
 
-    public MainTask setCallback(Callback callback) {
-        this.callback = callback;
+    public MainTask setComponentIndex(int componentIndex) {
+        this.componentIndex = componentIndex;
         return this;
-    }
-
-    public interface Callback {
-        void onClick();
     }
 }
