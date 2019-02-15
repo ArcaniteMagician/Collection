@@ -8,11 +8,11 @@ public class MainTask {
     private String title;
     private String description;
     private Class<?> forwardClass;
+    private Callback callback;
 
-    public MainTask(String title, String description, Class<?> forwardClass) {
+    public MainTask(String title, String description) {
         this.title = title;
         this.description = description;
-        this.forwardClass = forwardClass;
     }
 
     public String getTitle() {
@@ -35,7 +35,21 @@ public class MainTask {
         return forwardClass;
     }
 
-    public void setForwardClass(Class<?> forwardClass) {
+    public MainTask setForwardClass(Class<?> forwardClass) {
         this.forwardClass = forwardClass;
+        return this;
+    }
+
+    public Callback getCallback() {
+        return callback;
+    }
+
+    public MainTask setCallback(Callback callback) {
+        this.callback = callback;
+        return this;
+    }
+
+    public interface Callback {
+        void onClick();
     }
 }

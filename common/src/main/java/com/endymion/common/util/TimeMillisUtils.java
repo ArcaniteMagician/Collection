@@ -25,8 +25,7 @@ import java.util.TimeZone;
 public class TimeMillisUtils {
     private static final String TAG = "TimeMillisUtils";
 
-    private static TimeMillisUtils timeUtils;
-    private Context mContext;
+    private static volatile TimeMillisUtils timeUtils;
     private String mServerHost;
     private long mDeviceOpenTimeMillisOnServer;
     private boolean isDateTimeAuto;
@@ -72,7 +71,6 @@ public class TimeMillisUtils {
             return;
         }
 
-        mContext = applicationContext;
         mServerHost = serverHost;
         new Thread(new Runnable() {
             @Override

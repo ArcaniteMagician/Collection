@@ -1,8 +1,7 @@
 package com.endymion.common.ui.adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +14,14 @@ import java.util.List;
  */
 
 public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewHolder> {
-    protected Context mContext;
+    protected Activity mActivity;
     protected LayoutInflater mInflater;
     protected List<T> mList;
     protected int layoutId;
 
-    public BaseRecyclerViewAdapter(Context context, List<T> mList, int layoutId) {
-        this.mContext = context;
-        this.mInflater = LayoutInflater.from(context);
+    public BaseRecyclerViewAdapter(Activity activity, List<T> mList, int layoutId) {
+        this.mActivity = activity;
+        this.mInflater = LayoutInflater.from(activity);
         this.mList = mList;
         this.layoutId = layoutId;
     }

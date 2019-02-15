@@ -1,7 +1,6 @@
 package com.endymion.collection.apply.ui.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -17,9 +16,10 @@ import java.util.List;
  * Created by Jim on 2018/07/30.
  */
 
-public class MainTaskAdapter extends BaseRecyclerViewAdapter<MainTask> implements ItemTouchHelperAdapter{
-    public MainTaskAdapter(Context context, List<MainTask> dataList, int layoutId) {
-        super(context, dataList, layoutId);
+public class MainTaskAdapter extends BaseRecyclerViewAdapter<MainTask> implements ItemTouchHelperAdapter {
+
+    public MainTaskAdapter(Activity activity, List<MainTask> dataList, int layoutId) {
+        super(activity, dataList, layoutId);
     }
 
     @Override
@@ -29,7 +29,11 @@ public class MainTaskAdapter extends BaseRecyclerViewAdapter<MainTask> implement
                 .setOnClickListener(R.id.cl_main, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ((Activity)mContext).startActivityForResult(new Intent(mContext, data.getForwardClass()), 1);
+                        if (data.getForwardClass() != null) {
+                            mActivity.startActivityForResult(new Intent(mActivity, data.getForwardClass()), 1);
+                        } else {
+                            data.getCallback().onClick();
+                        }
                     }
                 });
     }
