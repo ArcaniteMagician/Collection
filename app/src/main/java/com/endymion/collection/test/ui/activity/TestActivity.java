@@ -4,6 +4,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -15,10 +16,14 @@ import com.endymion.collection.CollectionApplication;
 import com.endymion.collection.R;
 import com.endymion.collection.apply.presenter.MultiPresenter;
 import com.endymion.collection.apply.ui.view.MultiViewBridge;
+import com.endymion.collection.test.model.Occupation;
 import com.endymion.common.ui.activity.BasePresenterActivity;
 import com.endymion.common.util.CommonUtils;
 import com.endymion.common.util.TimeMillisUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.TimeZone;
 
 public class TestActivity extends BasePresenterActivity<MultiPresenter> implements MultiViewBridge {
@@ -28,6 +33,7 @@ public class TestActivity extends BasePresenterActivity<MultiPresenter> implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
+        initDataTest();
     }
 
     @Override
@@ -35,6 +41,35 @@ public class TestActivity extends BasePresenterActivity<MultiPresenter> implemen
         return R.layout.test_activity_main;
     }
 
+    private void initDataTest() {
+        List<Occupation> originList = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            Occupation item = new Occupation("" + (i + 1), "origin" + (new Random().nextBoolean() ? "A" : "B"));
+            originList.add(item);
+        }
+        Log.w("REPLACE_TEST", originList.toString());
+
+        SparseArray<Occupation> listA = new SparseArray<>();
+        for (int i = originList.size() - 1; i > -1; i--) {
+            Occupation item = originList.get(i);
+            if (item.getName().contains("A")) {
+                listA.put(i, item);
+                originList.remove(item);
+            }
+        }
+
+        // 实际应用场景为异步处理，异步方法受保护，不能增加判断条件
+        // 这里为了测试方便使用同步方法
+        for (Occupation item : originList) {
+            item.setName(item.getName().replace("B", "C"));
+        }
+
+        for (int i = 0; i < listA.size(); i++) {
+            int key = listA.keyAt(i);
+            originList.add(key, listA.get(key));
+        }
+        Log.w("REPLACE_TEST", originList.toString());
+    }
 
     private void init() {
         RadioGroup radioGroup = findViewById(R.id.rg);

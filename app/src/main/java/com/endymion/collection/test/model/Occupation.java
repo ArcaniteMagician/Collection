@@ -8,6 +8,15 @@ public class Occupation {
     private String name;
     private String id;
 
+    public Occupation() {
+
+    }
+
+    public Occupation(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
@@ -26,7 +35,6 @@ public class Occupation {
 
     @Override
     public String toString() {
-        String str = "Occupation: { name = + " + name + ", id = " + id + "}";
-        return str;
+        return "{id = " + id + ", name = " + name + "}";
     }
 }
