@@ -13,6 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- 系统级读写文件权限 Provider -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.endymion.collection.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +37,7 @@
             android:name=".test.ui.GalleryActivity"
             android:theme="@style/translucent" />
         <activity android:name=".test.ui.activity.contact.ContactActivity" />
+        <activity android:name=".test.ui.activity.pager.ViewPagerActivity" />
     </application>
 
 </manifest>

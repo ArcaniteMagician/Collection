@@ -12,6 +12,7 @@ import com.endymion.collection.apply.ui.adapter.MainTaskAdapter;
 import com.endymion.collection.test.ui.GalleryActivity;
 import com.endymion.collection.test.ui.activity.TestActivity;
 import com.endymion.collection.test.ui.activity.contact.ContactActivity;
+import com.endymion.collection.test.ui.activity.pager.ViewPagerActivity;
 import com.endymion.common.component.ComponentProxyFactory;
 import com.endymion.common.ui.activity.BaseActivity;
 import com.endymion.common.ui.adapter.RecyclerViewDivider;
@@ -43,6 +44,7 @@ public class MainActivity extends BaseActivity {
         mList.add(new MainTask("Gallery", "查看照片").setForwardClass(GalleryActivity.class));
         mList.add(new MainTask("Contact", "读取通讯录").setForwardClass(ContactActivity.class));
         mList.add(new MainTask("Weather", "天气组件跳转").setComponentIndex(ComponentProxyFactory.WEATHER));
+        mList.add(new MainTask("ViewPager", "Test for viewPager with activity page.").setForwardClass(ViewPagerActivity.class));
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
