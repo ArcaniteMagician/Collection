@@ -2,8 +2,9 @@
 
 buildscript {
     repositories {
-        jcenter()
+        // 把google库写在最前面，可以避免出现Could not find manifest-merger.jar的问题
         google()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
@@ -14,9 +15,11 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://jitpack.io' }
-        jcenter()
+        // 把google库写在最前面，可以避免出现Could not find manifest-merger.jar的问题
         google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://dl.bintray.com/cjt/maven' }
     }
 }
 
