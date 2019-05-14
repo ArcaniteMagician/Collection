@@ -11,6 +11,7 @@ import com.endymion.collection.apply.model.entity.MainTask;
 import com.endymion.collection.apply.ui.adapter.MainTaskAdapter;
 import com.endymion.collection.test.ui.GalleryActivity;
 import com.endymion.collection.test.ui.activity.TestActivity;
+import com.endymion.collection.test.ui.activity.camera.CameraActivity;
 import com.endymion.collection.test.ui.activity.contact.ContactActivity;
 import com.endymion.collection.test.ui.activity.pager.ViewPagerActivity;
 import com.endymion.common.component.ComponentProxyFactory;
@@ -45,6 +46,7 @@ public class MainActivity extends BaseActivity {
         mList.add(new MainTask("Contact", "读取通讯录").setForwardClass(ContactActivity.class));
         mList.add(new MainTask("Weather", "天气组件跳转").setComponentIndex(ComponentProxyFactory.WEATHER));
         mList.add(new MainTask("ViewPager", "Test for viewPager with activity page.").setForwardClass(ViewPagerActivity.class));
+        mList.add(new MainTask("Camera", "仿微信录像界面").setForwardClass(CameraActivity.class));
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

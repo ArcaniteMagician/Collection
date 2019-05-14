@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.endymion.collection.CollectionApplication;
 import com.endymion.collection.R;
@@ -109,6 +110,13 @@ public class TestActivity extends BasePresenterActivity<MultiPresenter> implemen
                 "窗前有一道小溪流过。学子在这里吃饭，由这里出发每天随社员去地里干活。干的活要么上山伐" +
                 "树，抬树，要么砍柳树毛子开荒种地。在山里，可听那吆呵声：“顺山倒了！”放树谨防回头棒！" +
                 "树上的枯枝打到别的树上再蹦回来，这回头棒打人最厉害。");
+        txt.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(TestActivity.this, "长按事件", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
         final TextView textView = findViewById(R.id.tv_duiqi);
         textView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

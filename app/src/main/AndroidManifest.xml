@@ -5,6 +5,16 @@
     <!-- 允许程序读取通讯录权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <!-- 读写文件 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- 相机 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
     <application
         android:name=".CollectionApplication"
         android:allowBackup="true"
@@ -38,6 +48,7 @@
             android:theme="@style/translucent" />
         <activity android:name=".test.ui.activity.contact.ContactActivity" />
         <activity android:name=".test.ui.activity.pager.ViewPagerActivity" />
+        <activity android:name=".test.ui.activity.camera.CameraActivity" />
     </application>
 
 </manifest>
