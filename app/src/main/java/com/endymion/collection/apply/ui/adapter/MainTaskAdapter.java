@@ -29,6 +29,11 @@ public class MainTaskAdapter extends BaseRecyclerViewAdapter<MainTask> implement
                 .setOnClickListener(R.id.cl_main, v -> {
                     if (data.getForwardClass() != null) {
                         mActivity.startActivityForResult(new Intent(mActivity, data.getForwardClass()), 1);
+                        // 以下四行为多任务显示方式，适用于打开不同书籍或文档、重要人物的聊天对话的情况
+//                        Intent intent = new Intent(mActivity.getApplication(), data.getForwardClass());
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+//                        mActivity.startActivity(intent);
                     } else {
                         ComponentProxyFactory.getInstance().getComponentProxy(data.getComponentIndex()).start(mActivity);
                     }
