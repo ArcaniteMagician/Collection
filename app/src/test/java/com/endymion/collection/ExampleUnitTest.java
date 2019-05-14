@@ -41,6 +41,9 @@ public class ExampleUnitTest {
         System.out.println("12, 123 = " + isServiceTypesContained(userHashSet12, userHashSet123));
         System.out.println("13, 123 = " + isServiceTypesContained(userHashSet13, userHashSet123));
         System.out.println("12, 13 = " + isServiceTypesContained(userHashSet12, userHashSet13));
+        System.out.println("=================================");
+
+        System.out.println("2 == (1 | 2)为" + (2 == (1 | 2)));
     }
 
     public class User {
