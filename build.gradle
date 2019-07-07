@@ -4,6 +4,7 @@ buildscript {
     repositories {
         // 把google库写在最前面，可以避免出现Could not find manifest-merger.jar的问题
         google()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         jcenter()
     }
     dependencies {
@@ -17,9 +18,10 @@ allprojects {
     repositories {
         // 把google库写在最前面，可以避免出现Could not find manifest-merger.jar的问题
         google()
-        jcenter()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/cjt/maven' }
+        jcenter()
     }
 }
 
