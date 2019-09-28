@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.endymion.ajchatui.TestCode;
 import com.endymion.collection.CollectionApplication;
 import com.endymion.collection.R;
 import com.endymion.collection.apply.presenter.MultiPresenter;
